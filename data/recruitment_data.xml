@@ -1,0 +1,86 @@
+<odoo>
+    <data>
+        <!-- Server Action Tanımlaması -->
+        <record id="action_remove_default_reasons" model="ir.actions.server">
+            <field name="name">Remove Default Refuse Reasons</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant_refuse_reason"/>
+            <field name="state">code</field>
+            <field name="code">model.remove_default_reasons()</field>
+        </record>
+
+        <!-- Server Action'ı Otomatik Olarak Çalıştırma -->
+        <record id="ir_cron_remove_default_reasons" model="ir.cron">
+            <field name="name">Remove Default Refuse Reasons</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant_refuse_reason"/>
+            <field name="state">code</field>
+            <field name="code">model.remove_default_reasons()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">1</field>
+        </record>
+
+        <!-- Refuse Reason Red Nedeni değişikliği -->
+        <record id="view_applicant_get_refuse_reason_form_inherit" model="ir.ui.view">
+            <field name="name">applicant.get.refuse.reason.form.inherit</field>
+            <field name="model">applicant.get.refuse.reason</field>
+            <field name="inherit_id" ref="hr_recruitment.applicant_get_refuse_reason_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='refuse_reason_id']" position="attributes">
+                    <attribute name="string">Red Nedeni:</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Yeni Reddetme Nedenleri -->
+        <record id="refuse_reason_yetersiz_bilgi" model="hr.applicant.refuse.reason">
+            <field name="name">Yetersiz Kişisel Bilgi</field>
+            <field name="template_id" ref="email_template_applicant_refuse_yetersiz_bilgi"/>
+            <field name="active">True</field>
+        </record>
+        <record id="refuse_reason_kontenjan_yüksek_lisans" model="hr.applicant.refuse.reason">
+            <field name="name">Kontenjan: Yüksek Lisans</field>
+            <field name="template_id" ref="email_template_applicant_refuse_kontenjan"/>
+            <field name="active">True</field>
+        </record>
+        <record id="refuse_reason_kontenjan_3-4_sınıf" model="hr.applicant.refuse.reason">
+            <field name="name">Kontenjan: 3. - 4. Sınıf</field>
+            <field name="template_id" ref="email_template_applicant_refuse_kontenjan"/>
+            <field name="active">True</field>
+        </record>
+        <record id="refuse_reason_kontenjan" model="hr.applicant.refuse.reason">
+            <field name="name">Kontenjan</field>
+            <field name="template_id" ref="email_template_applicant_refuse_kontenjan"/>
+            <field name="active">True</field>
+        </record>
+
+        <record id="refuse_reason_uyumsuz_profil" model="hr.applicant.refuse.reason">
+            <field name="name">Dernek Profiline Uyumsuzluk</field>
+            <field name="template_id" ref="email_template_applicant_refuse"/>
+            <field name="active">True</field>
+        </record>
+
+        <record id="refuse_reason_ozel_durum" model="hr.applicant.refuse.reason">
+            <field name="name">Özel Durum (Başvuran evli)</field>
+            <field name="template_id" ref="email_template_applicant_refuse"/>
+            <field name="active">True</field>
+        </record>
+
+        <record id="refuse_reason_ozel_durum_2" model="hr.applicant.refuse.reason">
+            <field name="name">Özel Durum (Başvuran öğrenci değil)</field>
+            <field name="template_id" ref="email_template_applicant_refuse"/>
+            <field name="active">True</field>
+        </record>
+
+        <record id="refuse_reason_duplicate" model="hr.applicant.refuse.reason">
+            <field name="name">Mükerrer Başvuru</field>
+            <field name="template_id" ref="email_template_applicant_refuse_mukerrer_basvuru"/>
+            <field name="active">True</field>
+        </record>
+
+        <record id="refuse_reason_spam" model="hr.applicant.refuse.reason">
+            <field name="name">Spam</field>
+            <field name="template_id" ref="email_template_applicant_refuse_spam"/>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>
